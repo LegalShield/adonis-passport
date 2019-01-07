@@ -60,14 +60,6 @@ describe('oauth2', function () {
             .reply(201, responseBody);
         });
 
-        it('completes the request', function (done) {
-          strategy._verify('some-username', 'some-password', function () {
-            scope.done()
-
-            done();
-          });
-        });
-
         describe('success', function () {
           it('calls next with the authentication tokens', function (done) {
             strategy._verify('some-username', 'some-password', function (user, info) {
