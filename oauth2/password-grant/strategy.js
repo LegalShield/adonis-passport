@@ -2,7 +2,7 @@ const util = require('util');
 const LocalStrategy = require('passport-local').Strategy;
 const url = require('url');
 const request = require('request');
-const JWT = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
 const Strategy = function Strategy (options) {
   if (!options) { throw new Error('PasswordGrantStrategy requires options'); }
@@ -21,7 +21,7 @@ const Strategy = function Strategy (options) {
     request.post(url.format(options.url), params, function (err, response, body) {
       try {
         const tokenset = JSON.parse(body);
-        const id_token = JWT.decode(tokenset.id_token);
+        const id_token = jwt.decode(tokenset.id_token);
 
         next(null, { accessToken: tokenset.access_token, refreshToken: tokenset.refresh_token, idToken: id_token });
       } catch (error) {
