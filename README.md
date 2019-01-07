@@ -13,7 +13,7 @@ These modules let you authenticate using LegalShield in your Node.js application
 ## OAuth2
 
 ### PasswordGrantStrategy
-#### Usage
+
 ##### Configure Strategy
 The PPLSI OAuth2 Password Grant authentication strategy authenticates users using a PPLSI account and the OAuth 2.0 password grant flow. The strategy requires a base URL for the PPLSI authentication server and your PPLSI client ID to be passed in.
 
