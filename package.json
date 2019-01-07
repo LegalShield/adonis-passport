@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/LegalShield/passport-pplsi.git"
   },
+  "engines": {
+    "node": "10.10.0"
+  },
   "author": "Douglas R. Lee",
   "license": "ISC",
   "bugs": {
