@@ -1,0 +1,30 @@
+{
+  "name": "passport-pplsi",
+  "version": "1.0.0",
+  "description": "Passport strategy to authenticate against PPLSI's OAuth2 implementations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha ./specs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LegalShield/passport-pplsi.git"
+  },
+  "author": "Douglas R. Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LegalShield/passport-pplsi/issues"
+  },
+  "homepage": "https://github.com/LegalShield/passport-pplsi#readme",
+  "dependencies": {
+    "jsonwebtoken": "^8.4.0",
+    "passport-local": "^1.0.0",
+    "pkginfo": "^0.4.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nock": "^10.0.6"
+  }
+}
