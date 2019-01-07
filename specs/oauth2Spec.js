@@ -31,10 +31,6 @@ describe('oauth2', function () {
     });
 
     describe('verify', function () {
-      it('sets verify on passport-local', function () {
-        expect(strategy._verify).to.exist;
-      });
-
       describe('request', function () {
         let scope, responseBody, idToken;
 
