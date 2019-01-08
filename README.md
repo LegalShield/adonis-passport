@@ -1,10 +1,10 @@
 # Passport PPLSI
-A collection of [passport](http://www.passportjs.org/) stragegies for authenticating against [LegalShield](https://legalshield.com/).
+A collection of [passport](http://www.passportjs.org/) strategies for authenticating against [LegalShield](https://legalshield.com/).
 
 These modules let you authenticate using LegalShield in your Node.js applications. By plugging into Passport, LegalShield authentication can be easily and unobtrusively integrated into any application or framework that supports [Connect](http://www.senchalabs.org/connect/)-style middleware, including [Express](http://expressjs.com/).
 
 ## Install
-  $ npm install passport-pplsi
+    $ npm install @legalshield/passport-pplsi
 
 ## Current Strategies
 * [OAuth2](#oauth2)
