@@ -1,3 +1,5 @@
+[![Codeship Status for LegalShield/passport-pplsi](https://app.codeship.com/projects/257350e0-f4f5-0136-2f32-1e71af04627f/status?branch=master)](/projects/320798)
+
 # Passport PPLSI
 A collection of [passport](http://www.passportjs.org/) strategies for authenticating against [LegalShield](https://legalshield.com/).
 
