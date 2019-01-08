@@ -1,6 +1,6 @@
 {
-  "name": "@legalshield/passport-pplsi",
-  "version": "1.0.1",
+  "name": "@pplsi/passport-pplsi",
+  "version": "1.0.2",
   "description": "Passport strategy to authenticate against PPLSI.",
   "main": "index.js",
   "scripts": {
