@@ -36,7 +36,7 @@ For example, as a route middleware in an [Express](http://expressjs.com/) applic
       res.send(req.session.passport.user);
     });
     
---
+------
 
 ### AuthorizationCodeStrategy
 
