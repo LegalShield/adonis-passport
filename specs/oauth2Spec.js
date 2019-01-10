@@ -6,27 +6,27 @@ const jwt = require('jsonwebtoken');
 describe('oauth2', function () {
   let Strategy, options, strategy;
 
-  describe('password grant', function () {
+  describe('password', function () {
     beforeEach(function () {
-      Strategy = PassportPPLSI.OAuth2.PasswordGrantStrategy;
+      Strategy = PassportPPLSI.OAuth2.PasswordStrategy;
       options = {
-        baseURL: 'http://localhost:5000/',
-        clientID: 'some-client-id'
+        base_url: 'http://localhost:5000/',
+        client_id: 'some-client-id'
       };
       strategy = new Strategy(options);
     });
 
     describe('options', function () {
       it('requires options to be passed in', function () {
-        expect(Strategy).to.throw(Error, 'PasswordGrantStrategy requires options');
+        expect(Strategy).to.throw(Error, 'PasswordStrategy requires options');
       });
 
-      it('requires a baseURL to be passed in the options object', function () {
-        expect(function () { Strategy({}) }).to.throw(Error, 'PasswordGrantStrategy requires baseURL to be set');
+      it('requires a base_url to be passed in the options object', function () {
+        expect(function () { Strategy({}) }).to.throw(Error, 'PasswordStrategy requires base_url to be set');
       });
 
-      it('requires a clientID to be passed in the options object', function () {
-        expect(function () { Strategy({ baseURL: 'someURL' }) }).to.throw(Error, 'PasswordGrantStrategy requires clientID to be set');
+      it('requires a client_id to be passed in the options object', function () {
+        expect(function () { Strategy({ base_url: 'someURL' }) }).to.throw(Error, 'PasswordStrategy requires client_id to be set');
       });
     });
 
@@ -40,7 +40,7 @@ describe('oauth2', function () {
           refresh_token: 'some-refresh-token',
           id_token: idToken
         };
-        scope = nock(options.baseURL, {
+        scope = nock(options.base_url, {
           reqheaders: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
@@ -50,7 +50,7 @@ describe('oauth2', function () {
             scope: 'openid',
             username: 'some-username',
             password: 'some-password',
-            client_id: options.clientID
+            client_id: options.client_id
           })
           .reply(201, responseBody);
       });
@@ -84,7 +84,55 @@ describe('oauth2', function () {
 
     describe('name', function () {
       it('sets the name', function () {
-        expect(strategy.name).to.eql('pplsi-oauth2-password-grant');
+        expect(strategy.name).to.eql('pplsi-oauth2-password');
+      });
+    });
+  });
+
+  describe('authorization code', function () {
+    beforeEach(function () {
+      Strategy = PassportPPLSI.OAuth2.AuthorizationCodeStrategy;
+      options = {
+        base_url: 'http://localhost:5000/',
+        client_id: 'some-client-id',
+        client_secret: 'some-client-secret',
+        redirect_uri: 'http://localhost:3000/callback',
+      };
+      strategy = new Strategy(options);
+    });
+
+    describe('options', function () {
+      it('requires options to be passed in', function () {
+        expect(Strategy).to.throw(Error, 'AuthorizationCodeStrategy requires options');
+      });
+
+      it('requires a base_url to be passed in the options object', function () {
+        expect(function () { Strategy({}) }).to.throw(Error, 'AuthorizationCodeStrategy requires base_url to be set');
+      });
+
+      it('requires a client_id to be passed in the options object', function () {
+        expect(function () { Strategy({ base_url: 'someURL' }) }).to.throw(Error, 'AuthorizationCodeStrategy requires client_id to be set');
+      });
+
+      it('requires a client_secret to be passed in the options object', function () {
+        expect(function () { Strategy({
+          base_url: 'someURL',
+          client_id: 'some-client-id'
+        }) }).to.throw(Error, 'AuthorizationCodeStrategy requires client_secret to be set');
+      });
+
+      it('requires a redirect_uri to be passed in the options object', function () {
+        expect(function () { Strategy({
+          base_url: 'someURL',
+          client_id: 'some-client-id',
+          client_secret: 'some-client-secret'
+        }) }).to.throw(Error, 'AuthorizationCodeStrategy requires redirect_uri to be set');
+      });
+    });
+
+    describe('name', function () {
+      it('sets the name', function () {
+        expect(strategy.name).to.eql('pplsi-oauth2-authorization-code');
       });
     });
   });

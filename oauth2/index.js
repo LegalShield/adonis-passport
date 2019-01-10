@@ -1,1 +1,2 @@
-exports.PasswordGrantStrategy = require('./password-grant');
+exports.PasswordStrategy = require('./password');
+exports.AuthorizationCodeStrategy = require('./authorization-code');
