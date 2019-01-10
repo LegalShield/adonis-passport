@@ -32,7 +32,7 @@ const Strategy = function Strategy (options) {
     token_endpoint_auth_method: 'client_secret_post'
   };
 
-  const issuer = new Issuer(issuerOptions);
+  const issuer = new Strategy.Issuer(issuerOptions);
   const client = new issuer.Client(clientOptions);
 
   OpenIDStrategy.call(this, { client: client }, function(tokenset, next) {
@@ -41,6 +41,8 @@ const Strategy = function Strategy (options) {
 
   this.name = 'pplsi-oauth2-authorization-code';
 }
+
+Strategy.Issuer = Issuer;
 
 util.inherits(Strategy, OpenIDStrategy);
 

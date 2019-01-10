@@ -1,7 +1,9 @@
+const rewire = require('rewire');
 const PassportPPLSI = require('../');
 const expect = require('chai').expect;
 const nock = require('nock');
 const jwt = require('jsonwebtoken');
+const sinon = require('sinon');
 
 describe('oauth2', function () {
   let Strategy, options, strategy;
@@ -127,6 +129,85 @@ describe('oauth2', function () {
           client_id: 'some-client-id',
           client_secret: 'some-client-secret'
         }) }).to.throw(Error, 'AuthorizationCodeStrategy requires redirect_uri to be set');
+      });
+    });
+
+    describe('issuer', function () {
+      let Strategy, options;
+
+      beforeEach(function () {
+        Strategy = rewire('../oauth2/authorization-code/strategy');
+        const Issuer = Strategy.__get__('Issuer');
+        const issuerSpy = sinon.spy(Strategy, 'Issuer');
+
+        Strategy.__set__('Issuer', issuerSpy);
+
+        options = {
+          base_url: 'http://localhost:5000/',
+          client_id: 'some-client-id',
+          client_secret: 'some-client-secret',
+          redirect_uri: 'http://localhost:3000/callback'
+        };
+        new Strategy(options);
+      });
+
+      it('is configured correctly', function () {
+        const issuerOptions = {
+          issuer: options.base_url,
+          authorization_endpoint: `${options.base_url}auth/authorize`,
+          token_endpoint: `${options.base_url}auth/token`,
+          jwks_uri: `${options.base_url}auth/certificates`
+        };
+
+        expect(Strategy.Issuer.getCall(0).args[0]).to.eql(issuerOptions);
+      });
+    });
+
+    describe('client', function () {
+      let issuerSpy, clientOptions;
+      let issuerFake = {
+        Client: function () { }
+      };
+
+      beforeEach(function () {
+        const Strategy = rewire('../oauth2/authorization-code/strategy');
+
+        const options = {
+          base_url: 'http://localhost:5000/',
+          client_id: 'some-client-id',
+          client_secret: 'some-client-secret',
+          redirect_uri: 'http://localhost:3000/callback'
+        };
+        const issuerOptions = {
+          issuer: options.base_url,
+          authorization_endpoint: `${options.base_url}auth/authorize`,
+          token_endpoint: `${options.base_url}auth/token`,
+          jwks_uri: `${options.base_url}auth/certificates`
+        };
+        clientOptions = {
+          client_id: options.client_id,
+          client_secret: options.client_secret,
+          redirect_uris: [
+            options.redirect_uri
+          ],
+          token_endpoint_auth_method: 'client_secret_post'
+        };
+
+        const Issuer = Strategy.__get__('Issuer');
+        const issuer = new Issuer(issuerOptions);
+        const client = new issuer.Client(clientOptions);
+
+        let issuerStub = sinon.stub(Strategy, 'Issuer');
+        issuerStub.returns(issuerFake);
+        issuerSpy = sinon.stub(issuerFake, 'Client').returns(client);
+
+        Strategy.__set__('Issuer', issuerSpy);
+
+        new Strategy(options);
+      });
+
+      it('is configured correctly', function () {
+        expect(issuerSpy.getCall(0).args[0]).to.eql(clientOptions);
       });
     });
 
