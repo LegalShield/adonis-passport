@@ -5,17 +5,17 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 
 const Strategy = function Strategy (options) {
-  if (!options) { throw new Error('PasswordGrantStrategy requires options'); }
-  if (!options.baseURL) { throw new Error('PasswordGrantStrategy requires baseURL to be set'); }
-  if (!options.clientID) { throw new Error('PasswordGrantStrategy requires clientID to be set'); }
+  if (!options) { throw new Error('PasswordStrategy requires options'); }
+  if (!options.base_url) { throw new Error('PasswordStrategy requires base_url to be set'); }
+  if (!options.client_id) { throw new Error('PasswordStrategy requires client_id to be set'); }
 
-  options.url = url.parse(options.baseURL);
+  options.url = url.parse(options.base_url);
   options.url.pathname = '/auth/token';
 
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      form: { grant_type: 'password', scope: 'openid', username: username, password: password, client_id: options.clientID }
+      form: { grant_type: 'password', scope: 'openid', username: username, password: password, client_id: options.client_id }
     };
 
     request.post(url.format(options.url), params, function (err, response, body) {
@@ -30,7 +30,7 @@ const Strategy = function Strategy (options) {
     });
   });
 
-  this.name = 'pplsi-oauth2-password-grant';
+  this.name = 'pplsi-oauth2-password';
 }
 
 util.inherits(Strategy, LocalStrategy);

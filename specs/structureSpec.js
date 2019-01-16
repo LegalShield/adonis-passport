@@ -6,7 +6,11 @@ describe('structure', function () {
     expect(PassportPPLSI.OAuth2).to.exist;
   });
 
-  it('exports OAuth2.PasswordGrantStrategy', function () {
-    expect(PassportPPLSI.OAuth2.PasswordGrantStrategy).to.exist;
+  it('exports OAuth2.PasswordStrategy', function () {
+    expect(PassportPPLSI.OAuth2.PasswordStrategy).to.exist;
+  });
+
+  it('exports OAuth2.AuthorizationCodeStrategy', function () {
+    expect(PassportPPLSI.OAuth2.AuthorizationCodeStrategy).to.exist;
   });
 });
