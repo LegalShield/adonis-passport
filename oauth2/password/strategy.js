@@ -5,16 +5,23 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 
 const Strategy = function Strategy (options) {
+  console.log(options)
   if (!options) { throw new Error('PasswordGrantStrategy requires options'); }
-  if (!options.baseURL) { throw new Error('PasswordGrantStrategy requires baseURL to be set'); }
-  if (!options.clientID) { throw new Error('PasswordGrantStrategy requires clientID to be set'); }
-  options.url = url.parse(options.baseURL);
-  options.url.pathname = '/auth/tokens';
-  console.log('**************')
+  if (!options.base_url) { throw new Error('PasswordGrantStrategy requires baseURL to be set'); }
+  if (!options.client_id) { throw new Error('PasswordGrantStrategy requires clientID to be set'); }
+  options.url = url.parse(options.base_url);
+  options.url.pathname = '/auth/v1/tokens';
+  
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      form: { grant_type: 'password', scope: 'openid', username: username, password: password, client_id: options.clientID }
+      form: {
+        grant_type: 'password',
+        scope: 'openid',
+        username: username,
+        password: password,
+        client_id: options.client_id
+      }
     };
 
     
