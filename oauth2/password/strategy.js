@@ -5,7 +5,6 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 
 const Strategy = function Strategy (options) {
-  console.log(options)
   if (!options) { throw new Error('PasswordGrantStrategy requires options'); }
   if (!options.base_url) { throw new Error('PasswordGrantStrategy requires baseURL to be set'); }
   if (!options.client_id) { throw new Error('PasswordGrantStrategy requires clientID to be set'); }
@@ -37,7 +36,7 @@ const Strategy = function Strategy (options) {
     });
   });
 
-  this.name = 'pplsi-oauth2-password-grant';
+  this.name = 'pplsi-oauth2-password';
 }
 
 util.inherits(Strategy, LocalStrategy);
