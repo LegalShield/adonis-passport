@@ -5,9 +5,9 @@ const request = require('request');
 const jwt = require('jsonwebtoken');
 
 const Strategy = function Strategy (options) {
-  if (!options) { throw new Error('PasswordGrantStrategy requires options'); }
-  if (!options.base_url) { throw new Error('PasswordGrantStrategy requires baseURL to be set'); }
-  if (!options.client_id) { throw new Error('PasswordGrantStrategy requires clientID to be set'); }
+  if (!options) { throw new Error('PasswordStrategy requires options'); }
+  if (!options.base_url) { throw new Error('PasswordStrategy requires baseURL to be set'); }
+  if (!options.client_id) { throw new Error('PasswordStrategy requires clientID to be set'); }
   
   options.url = url.parse(options.base_url);
   options.url.pathname = '/auth/v1/tokens';
