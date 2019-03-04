@@ -24,7 +24,6 @@ const Strategy = function Strategy (options) {
       }
     };
 
-    
     request.post(url.format(options.url), params, function (err, response, body) {
       try {
         const tokenset = JSON.parse(body);
