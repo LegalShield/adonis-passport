@@ -12,10 +12,13 @@ const Strategy = function Strategy (options) {
 
   let authorizationURL = url.parse(options.base_url);
   authorizationURL.pathname = 'auth/v1/authorize';
+  authorizationURL.protocol = options.base_protocol;
   let tokenURL = url.parse(options.base_url);
   tokenURL.pathname = 'auth/v1/tokens';
+  tokenURL.protocol = options.base_protocol;
   let jwksURL = url.parse(options.base_url);
   jwksURL.pathname = 'auth/v1/certificates';
+  jwksURL.protocol = options.base_protocol;
 
   issuerOptions = {
     issuer: options.base_url,
