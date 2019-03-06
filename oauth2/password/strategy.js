@@ -11,6 +11,7 @@ const Strategy = function Strategy (options) {
   
   options.url = url.parse(options.base_url);
   options.url.pathname = '/auth/v1/tokens';
+  options.url.protocol = options.base_protocol;
   
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
