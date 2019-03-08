@@ -9,13 +9,19 @@ const Strategy = function Strategy (options) {
   if (!options.base_url) { throw new Error('PasswordStrategy requires base_url to be set'); }
   if (!options.client_id) { throw new Error('PasswordStrategy requires client_id to be set'); }
 
-  options.url = url.parse(options.base_url);
-  options.url.pathname = '/auth/token';
+  options.url = url.parse(options.base_protocol + options.base_url);
+  options.url.pathname = '/auth/v1/tokens';
 
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      form: { grant_type: 'password', scope: 'openid', username: username, password: password, client_id: options.client_id }
+      form: {
+        grant_type: 'password',
+        scope: 'openid',
+        username: username,
+        password: password,
+        client_id: options.client_id
+      }
     };
 
     request.post(url.format(options.url), params, function (err, response, body) {
