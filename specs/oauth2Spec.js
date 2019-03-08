@@ -12,7 +12,8 @@ describe('oauth2', function () {
     beforeEach(function () {
       Strategy = PassportPPLSI.OAuth2.PasswordStrategy;
       options = {
-        base_url: 'http://localhost:5000/',
+        base_url: 'localhost:5000/',
+        base_protocol: 'http://',
         client_id: 'some-client-id'
       };
       strategy = new Strategy(options);
@@ -42,12 +43,12 @@ describe('oauth2', function () {
           refresh_token: 'some-refresh-token',
           id_token: idToken
         };
-        scope = nock(options.base_url, {
+        scope = nock(options.base_protocol + options.base_url, {
           reqheaders: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-          .post('/auth/token', {
+          .post('/auth/v1/tokens', {
             grant_type: 'password',
             scope: 'openid',
             username: 'some-username',
@@ -143,7 +144,8 @@ describe('oauth2', function () {
         Strategy.__set__('Issuer', issuerSpy);
 
         options = {
-          base_url: 'http://localhost:5000/',
+          base_url: 'localhost:5000/',
+          base_protocol: 'http://',
           client_id: 'some-client-id',
           client_secret: 'some-client-secret',
           redirect_uri: 'http://localhost:3000/callback'
@@ -154,9 +156,9 @@ describe('oauth2', function () {
       it('is configured correctly', function () {
         const issuerOptions = {
           issuer: options.base_url,
-          authorization_endpoint: `${options.base_url}auth/authorize`,
-          token_endpoint: `${options.base_url}auth/token`,
-          jwks_uri: `${options.base_url}auth/certificates`
+          authorization_endpoint: `${options.base_protocol + options.base_url}auth/v1/authorize`,
+          token_endpoint: `${options.base_protocol + options.base_url}auth/v1/tokens`,
+          jwks_uri: `${options.base_protocol + options.base_url}auth/v1/certificates`
         };
 
         expect(Strategy.Issuer.getCall(0).args[0]).to.eql(issuerOptions);
