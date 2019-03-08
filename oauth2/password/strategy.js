@@ -8,7 +8,7 @@ const Strategy = function Strategy (options) {
   if (!options) { throw new Error('PasswordStrategy requires options'); }
   if (!options.base_url) { throw new Error('PasswordStrategy requires base_url to be set'); }
   if (!options.client_id) { throw new Error('PasswordStrategy requires client_id to be set'); }
-  
+
   options.url = url.parse(options.base_protocol + options.base_url);
   options.url.pathname = '/auth/v1/tokens';
 
