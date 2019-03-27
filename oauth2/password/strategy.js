@@ -26,6 +26,10 @@ const Strategy = function Strategy (options) {
 
     request.post(url.format(options.url), params, function (err, response, body) {
       try {
+        if (response.statusCode !== 200 && response.statusCode !== 201) {
+          throw (err);
+        }
+
         const tokenset = JSON.parse(body);
         const id_token = jwt.decode(tokenset.id_token);
 
