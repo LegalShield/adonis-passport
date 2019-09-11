@@ -11,11 +11,11 @@ const Strategy = function Strategy (options) {
   if (!options.redirect_uri) { throw new Error('AuthorizationCodeStrategy requires redirect_uri to be set'); }
 
   let authorizationURL = url.parse(options.base_protocol + options.base_url);
-  authorizationURL.pathname = 'auth/v1/authorize';
+  authorizationURL.pathname = 'auth/o_auth2/v1/authorize';
   let tokenURL = url.parse(options.base_protocol + options.base_url);
-  tokenURL.pathname = 'auth/v1/tokens';
+  tokenURL.pathname = 'auth/o_auth2/v1/token';
   let jwksURL = url.parse(options.base_protocol + options.base_url);
-  jwksURL.pathname = 'auth/v1/certificates';
+  jwksURL.pathname = 'auth/o_auth2/v1/certificates';
 
   issuerOptions = {
     issuer: options.base_url,
