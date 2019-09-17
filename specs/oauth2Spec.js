@@ -48,7 +48,7 @@ describe('oauth2', function () {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-          .post('/auth/v1/tokens', {
+          .post('auth/o_auth2/v1/token', {
             grant_type: 'password',
             scope: 'openid',
             username: 'some-username',
@@ -155,10 +155,10 @@ describe('oauth2', function () {
 
       it('is configured correctly', function () {
         const issuerOptions = {
-          issuer: options.base_url,
-          authorization_endpoint: `${options.base_protocol + options.base_url}auth/v1/authorize`,
-          token_endpoint: `${options.base_protocol + options.base_url}auth/v1/tokens`,
-          jwks_uri: `${options.base_protocol + options.base_url}auth/v1/certificates`
+          issuer: options.base_protocol + options.base_url,
+          authorization_endpoint: `${options.base_protocol + options.base_url}auth/o_auth2/v1/authorize`,
+          token_endpoint: `${options.base_protocol + options.base_url}auth/o_auth2/v1/token`,
+          jwks_uri: `${options.base_protocol + options.base_url}auth/o_auth2/v1/certificates`,
         };
 
         expect(Strategy.Issuer.getCall(0).args[0]).to.eql(issuerOptions);
@@ -172,7 +172,7 @@ describe('oauth2', function () {
       };
 
       beforeEach(function () {
-        const Strategy = rewire('../oauth2/authorization-code/strategy');
+      const Strategy = rewire('../oauth2/authorization-code/strategy');
 
         const options = {
           base_url: 'http://localhost:5000/',
