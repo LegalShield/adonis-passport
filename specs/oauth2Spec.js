@@ -48,7 +48,7 @@ describe('oauth2', function () {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
-          .post('auth/o_auth2/v1/token', {
+          .post('/auth/o_auth2/v1/token', {
             grant_type: 'password',
             scope: 'openid',
             username: 'some-username',
