@@ -10,7 +10,7 @@ const Strategy = function Strategy (options) {
   if (!options.client_id) { throw new Error('PasswordStrategy requires client_id to be set'); }
 
   options.url = url.parse(options.base_protocol + options.base_url);
-  options.url.pathname = '/auth/v1/tokens';
+  options.url.pathname = 'auth/o_auth2/v1/token';
 
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
