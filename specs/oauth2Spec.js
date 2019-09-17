@@ -172,7 +172,7 @@ describe('oauth2', function () {
       };
 
       beforeEach(function () {
-      const Strategy = rewire('../oauth2/authorization-code/strategy');
+        const Strategy = rewire('../oauth2/authorization-code/strategy');
 
         const options = {
           base_url: 'http://localhost:5000/',

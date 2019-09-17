@@ -16,7 +16,7 @@ const Strategy = function Strategy (options) {
   tokenURL.pathname = 'auth/o_auth2/v1/token';
   let jwksURL = url.parse(options.base_protocol + options.base_url);
   jwksURL.pathname = 'auth/o_auth2/v1/certificates';
-  
+
   issuerOptions = {
     issuer: options.base_protocol + options.base_url,
     authorization_endpoint: url.format(authorizationURL),
