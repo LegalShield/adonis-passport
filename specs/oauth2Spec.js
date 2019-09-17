@@ -158,7 +158,7 @@ describe('oauth2', function () {
           issuer: options.base_protocol + options.base_url,
           authorization_endpoint: `${options.base_protocol + options.base_url}auth/o_auth2/v1/authorize`,
           token_endpoint: `${options.base_protocol + options.base_url}auth/o_auth2/v1/token`,
-          jwks_uri: `${options.base_protocol + options.base_url}auth/o_auth2/v1/certificates`,
+          jwks_uri: `${options.base_protocol + options.base_url}auth/o_auth2/v1/certificates`
         };
 
         expect(Strategy.Issuer.getCall(0).args[0]).to.eql(issuerOptions);
