@@ -27,7 +27,7 @@ The PPLSI OAuth2 Password authentication strategy authenticates users using a PP
       client_id: some-client-id
     }));
 
-You can optionally pass in the scope the to use when making the token request. By default the scope is `openid`. This will return the `id_token` but if you want to include claims with that token you will need to pass in the claims that you want in the scope. So if you wanted additional claims you would include them in the options like so:
+You can optionally pass in the scope to use when making the token request. By default the scope is `openid`. This will return the `id_token` but if you want to include claims with that token you will need to pass in the claims that you want in the scope. So if you wanted additional claims you would include them in the options like so:
 
     const PasswordStrategy = require('@pplsi/passport-pplsi').OAuth2.PasswordStrategy;
 
