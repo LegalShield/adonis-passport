@@ -27,6 +27,17 @@ The PPLSI OAuth2 Password authentication strategy authenticates users using a PP
       client_id: some-client-id
     }));
 
+You can optionally pass in the scope the to use when making the token request. By default the scope is `openid`. This will return the `id_token` but if you want to include claims with that token you will need to pass in the claims that you want in the scope. So if you wanted additional claims you would include them in the options like so:
+
+    const PasswordStrategy = require('@pplsi/passport-pplsi').OAuth2.PasswordStrategy;
+
+    passport.use(new PasswordStrategy({
+      base_url: 'https://api.legalshield.com',
+      client_id: some-client-id,
+      scope: 'openid name roles'
+    }));
+
+
 #### Authenticate Requests
 Use `passport.authenticate()`, specifying the `'pplsi-oauth2-password'` strategy, to authenticate requests.
 
