@@ -43,32 +43,72 @@ describe('oauth2', function () {
           refresh_token: 'some-refresh-token',
           id_token: idToken
         };
-        scope = nock(options.base_protocol + options.base_url, {
-          reqheaders: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .post('/auth/o_auth2/v1/token', {
-            grant_type: 'password',
-            scope: 'openid',
-            username: 'some-username',
-            password: 'some-password',
-            client_id: options.client_id
-          })
-          .reply(201, responseBody);
       });
 
-      describe('success', function () {
-        it('calls next with the authentication tokens', function (done) {
-          strategy._verify('some-username', 'some-password', function (user, info) {
-            expect(user).to.be.null;
-            expect(info).to.eql({
-              accessToken: 'some-access-token',
-              refreshToken: 'some-refresh-token',
-              idToken: jwt.decode(idToken)
-            });
+      context('default scope', function () {
+        beforeEach(function () {
+          scope = nock(options.base_protocol + options.base_url, {
+            reqheaders: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+            .post('/auth/o_auth2/v1/token', {
+              grant_type: 'password',
+              scope: 'openid',
+              username: 'some-username',
+              password: 'some-password',
+              client_id: options.client_id
+            })
+            .reply(201, responseBody);
+        });
 
-            done();
+        describe('success', function () {
+          it('calls next with the authentication tokens', function (done) {
+            strategy._verify('some-username', 'some-password', function (user, info) {
+              expect(user).to.be.null;
+              expect(info).to.eql({
+                accessToken: 'some-access-token',
+                refreshToken: 'some-refresh-token',
+                idToken: jwt.decode(idToken)
+              });
+
+              done();
+            });
+          });
+        });
+      });
+
+      context('custom scope', function () {
+        beforeEach(function () {
+          options.scope = 'openid name roles';
+          strategy = new Strategy(options);
+          scope = nock(options.base_protocol + options.base_url, {
+            reqheaders: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
+          })
+            .post('/auth/o_auth2/v1/token', {
+              grant_type: 'password',
+              scope: 'openid name roles',
+              username: 'some-username',
+              password: 'some-password',
+              client_id: options.client_id
+            })
+            .reply(201, responseBody);
+        });
+
+        describe('success', function () {
+          it('calls next with the authentication tokens', function (done) {
+            strategy._verify('some-username', 'some-password', function (user, info) {
+              expect(user).to.be.null;
+              expect(info).to.eql({
+                accessToken: 'some-access-token',
+                refreshToken: 'some-refresh-token',
+                idToken: jwt.decode(idToken)
+              });
+
+              done();
+            });
           });
         });
       });

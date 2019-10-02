@@ -11,13 +11,14 @@ const Strategy = function Strategy (options) {
 
   options.url = url.parse(options.base_protocol + options.base_url);
   options.url.pathname = 'auth/o_auth2/v1/token';
+  if (!options.scope) { options.scope = 'openid'; }
 
   LocalStrategy.call(this, options, function(username, password, next) {
     const params = {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       form: {
         grant_type: 'password',
-        scope: 'openid',
+        scope: options.scope,
         username: username,
         password: password,
         client_id: options.client_id
