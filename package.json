@@ -1,6 +1,6 @@
 {
   "name": "@pplsi/passport-pplsi",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Passport strategies to authenticate against PPLSI.",
   "main": "index.js",
   "scripts": {
