@@ -10,7 +10,9 @@ const Strategy = function Strategy (options) {
   if (!options.client_secret) { throw new Error('AuthorizationCodeStrategy requires client_secret to be set'); }
   if (!options.redirect_uri) { throw new Error('AuthorizationCodeStrategy requires redirect_uri to be set'); }
 
-  let authorizationURL = url.parse(options.base_protocol + options.base_url);
+  const redirect_base_url = options.redirect_base_url || options.base_url;
+
+  let authorizationURL = url.parse(options.base_protocol + redirect_base_url);
   authorizationURL.pathname = 'auth/o_auth2/v1/authorize';
   let tokenURL = url.parse(options.base_protocol + options.base_url);
   tokenURL.pathname = 'auth/o_auth2/v1/token';
@@ -18,7 +20,7 @@ const Strategy = function Strategy (options) {
   jwksURL.pathname = 'auth/o_auth2/v1/certificates';
 
   issuerOptions = {
-    issuer: options.base_protocol + options.base_url,
+    issuer: options.base_protocol + redirect_base_url,
     authorization_endpoint: url.format(authorizationURL),
     token_endpoint: url.format(tokenURL),
     jwks_uri: url.format(jwksURL)
