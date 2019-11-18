@@ -205,6 +205,39 @@ describe('oauth2', function () {
       });
     });
 
+    describe('issuer when redirect has different base url', function () {
+      let Strategy, options;
+
+      beforeEach(function () {
+        Strategy = rewire('../oauth2/authorization-code/strategy');
+        const Issuer = Strategy.__get__('Issuer');
+        const issuerSpy = sinon.spy(Strategy, 'Issuer');
+
+        Strategy.__set__('Issuer', issuerSpy);
+
+        options = {
+          base_url: 'adonis:3000/',
+          redirect_base_url: 'localhost:3000/',
+          base_protocol: 'http://',
+          client_id: 'some-client-id',
+          client_secret: 'some-client-secret',
+          redirect_uri: 'http://localhost:3000/callback'
+        };
+        new Strategy(options);
+      });
+
+      it('is configured correctly', function () {
+        const issuerOptions = {
+          issuer: options.base_protocol + options.redirect_base_url,
+          authorization_endpoint: `${options.base_protocol + options.redirect_base_url}auth/o_auth2/v1/authorize`,
+          token_endpoint: `${options.base_protocol + options.base_url}auth/o_auth2/v1/token`,
+          jwks_uri: `${options.base_protocol + options.base_url}auth/o_auth2/v1/certificates`
+        };
+
+        expect(Strategy.Issuer.getCall(0).args[0]).to.eql(issuerOptions);
+      });
+    });
+
     describe('client', function () {
       let issuerSpy, clientOptions;
       let issuerFake = {
