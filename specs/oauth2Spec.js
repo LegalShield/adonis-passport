@@ -286,6 +286,23 @@ describe('oauth2', function () {
       });
     });
 
+    describe('scope', function () {
+      describe('default scope', function () {
+        it('is set to openid', function () {
+          expect(strategy._params.scope).to.eql('openid');
+        });
+      });
+
+      describe('custom scope', function () {
+        it('is set to openid', function () {
+          options.scope = 'something custom';
+          strategy = new Strategy(options);
+
+          expect(strategy._params.scope).to.eql('something custom');
+        });
+      });
+    });
+
     describe('name', function () {
       it('sets the name', function () {
         expect(strategy.name).to.eql('pplsi-oauth2-authorization-code');
