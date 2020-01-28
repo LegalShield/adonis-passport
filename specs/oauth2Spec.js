@@ -294,7 +294,7 @@ describe('oauth2', function () {
       });
 
       describe('custom scope', function () {
-        it('is set to openid', function () {
+        it('is set to the value passed in', function () {
           options.scope = 'something custom';
           strategy = new Strategy(options);
 
