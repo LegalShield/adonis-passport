@@ -33,14 +33,13 @@ const Strategy = function Strategy (options) {
     redirect_uris: [
       options.redirect_uri
     ],
-    token_endpoint_auth_method: 'client_secret_post',
-    scope: options.scope
+    token_endpoint_auth_method: 'client_secret_post'
   };
 
   const issuer = new Strategy.Issuer(issuerOptions);
   const client = new issuer.Client(clientOptions);
 
-  OpenIDStrategy.call(this, { client: client }, function(tokenset, next) {
+  OpenIDStrategy.call(this, { client: client, params: { scope: options.scope } }, function(tokenset, next) {
     next(null, { accessToken: tokenset.access_token, refreshToken: tokenset.refresh_token, idToken: tokenset.claims });
   });
 
