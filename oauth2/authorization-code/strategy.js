@@ -10,6 +10,8 @@ const Strategy = function Strategy (options) {
   if (!options.client_secret) { throw new Error('AuthorizationCodeStrategy requires client_secret to be set'); }
   if (!options.redirect_uri) { throw new Error('AuthorizationCodeStrategy requires redirect_uri to be set'); }
 
+  if (!options.scope) { options.scope = 'openid'; }
+
   const redirect_base_url = options.redirect_base_url || options.base_url;
 
   let authorizationURL = url.parse(options.base_protocol + redirect_base_url);
@@ -31,7 +33,8 @@ const Strategy = function Strategy (options) {
     redirect_uris: [
       options.redirect_uri
     ],
-    token_endpoint_auth_method: 'client_secret_post'
+    token_endpoint_auth_method: 'client_secret_post',
+    scope: options.scope
   };
 
   const issuer = new Strategy.Issuer(issuerOptions);
