@@ -10,6 +10,8 @@ const Strategy = function Strategy (options) {
   if (!options.client_secret) { throw new Error('AuthorizationCodeStrategy requires client_secret to be set'); }
   if (!options.redirect_uri) { throw new Error('AuthorizationCodeStrategy requires redirect_uri to be set'); }
 
+  if (!options.scope) { options.scope = 'openid'; }
+
   const redirect_base_url = options.redirect_base_url || options.base_url;
 
   let authorizationURL = url.parse(options.base_protocol + redirect_base_url);
@@ -37,7 +39,7 @@ const Strategy = function Strategy (options) {
   const issuer = new Strategy.Issuer(issuerOptions);
   const client = new issuer.Client(clientOptions);
 
-  OpenIDStrategy.call(this, { client: client }, function(tokenset, next) {
+  OpenIDStrategy.call(this, { client: client, params: { scope: options.scope } }, function(tokenset, next) {
     next(null, { accessToken: tokenset.access_token, refreshToken: tokenset.refresh_token, idToken: tokenset.claims });
   });
 
